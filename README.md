@@ -7,6 +7,8 @@ A complete, production-ready full-stack e-commerce website built with **React.js
 ![React](https://img.shields.io/badge/React-18.2%2B-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-7.2%2B-green)
 
+**🚀 Live Demo:** [https://webpage-omega.vercel.app/](https://webpage-omega.vercel.app/)
+
 ## 🎯 Features
 
 ### 👥 User Management

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import api from '../api/api'
 import ProductCard from '../components/ProductCard'
 import { Search, ChevronDown } from 'lucide-react'
+import { mockProducts } from '../mockData'
 
 export default function Products() {
   const [products, setProducts] = useState([])
@@ -43,7 +44,23 @@ export default function Products() {
         
         setProducts(allProducts)
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error("Backend failed, using mock data", err)
+        let allProducts = [...mockProducts]
+        
+        // Apply local filtering for mock data
+        if (category) allProducts = allProducts.filter(p => p.category === category)
+        if (search) allProducts = allProducts.filter(p => p.title.toLowerCase().includes(search.toLowerCase()))
+        allProducts = allProducts.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1])
+        
+        if (sortBy === 'low-to-high') {
+          allProducts.sort((a, b) => (a.discountPrice || a.price) - (b.discountPrice || b.price))
+        } else if (sortBy === 'high-to-low') {
+          allProducts.sort((a, b) => (b.discountPrice || b.price) - (a.discountPrice || a.price))
+        }
+        
+        setProducts(allProducts)
+      })
       .finally(() => setLoading(false))
   }, [search, category, priceRange, sortBy])
 

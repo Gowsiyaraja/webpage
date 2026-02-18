@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import api from '../api/api'
 import ProductCard from '../components/ProductCard'
 import { Sparkles, Leaf, Shield } from 'lucide-react'
+import { mockProducts } from '../mockData'
 
 export default function Home() {
   const [products, setProducts] = useState([])
@@ -11,7 +12,10 @@ export default function Home() {
   useEffect(() => {
     api.get('/products?limit=8')
       .then(res => setProducts(res.data.data || []))
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error("Backend failed, using mock data", err)
+        setProducts(mockProducts.slice(0, 8))
+      })
       .finally(() => setLoading(false))
   }, [])
 

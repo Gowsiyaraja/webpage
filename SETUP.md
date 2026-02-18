@@ -164,6 +164,10 @@ blossom/
 **Backend:** Render / Heroku
 **Database:** MongoDB Atlas (free tier)
 
+### Your Live Links
+- **Frontend:** https://webpage-omega.vercel.app/
+- **Backend:** https://blossom-backend-nbnd.onrender.com
+
 See full README.md for details.
 
 ---
