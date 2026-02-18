@@ -76,7 +76,7 @@ export default function Login() {
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full flex items-center justify-center gap-2">
             <LogIn size={18} />
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? 'Signing in... (Server waking up)' : 'Sign In'}
           </button>
         </form>
 

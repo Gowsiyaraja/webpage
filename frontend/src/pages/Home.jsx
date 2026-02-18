@@ -10,10 +10,17 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    api.get('/products?limit=8')
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Request timed out')), 5000)
+    );
+
+    Promise.race([
+      api.get('/products?limit=8'),
+      timeoutPromise
+    ])
       .then(res => setProducts(res.data.data || []))
       .catch(err => {
-        console.error("Backend failed, using mock data", err)
+        console.error("Backend failed or timed out, using mock data", err)
         setProducts(mockProducts.slice(0, 8))
       })
       .finally(() => setLoading(false))
@@ -67,7 +74,7 @@ export default function Home() {
         {loading ? (
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-            <p className="mt-4 text-gray-600">Loading amazing products...</p>
+            <p className="mt-4 text-gray-600">Loading amazing products... (Server might be waking up)</p>
           </div>
         ) : products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

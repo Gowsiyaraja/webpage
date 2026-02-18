@@ -24,10 +24,19 @@ export default function Products() {
 
   useEffect(() => {
     setLoading(true)
-    api.get('/products', {
-      params: { q: search, category, limit: 50 }
-    })
-      .then(res => {
+    
+    // Create a promise that rejects after 8 seconds
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Request timed out')), 8000)
+    );
+
+    // Race the API call against the timeout
+    Promise.race([
+      api.get('/products', { params: { q: search, category, limit: 50 } }),
+      timeoutPromise
+    ])
+      .then(response => {
+        const res = response; // response from api.get
         let allProducts = res.data.data || []
         
         // Filter by price
@@ -45,8 +54,8 @@ export default function Products() {
         setProducts(allProducts)
       })
       .catch(err => {
-        console.error("Backend failed, using mock data", err)
-        let allProducts = [...mockProducts]
+        console.error("Backend failed or timed out, using mock data", err);
+        let allProducts = [...mockProducts];
         
         // Apply local filtering for mock data
         if (category) allProducts = allProducts.filter(p => p.category === category)
@@ -162,7 +171,7 @@ export default function Products() {
           {loading ? (
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-              <p className="mt-4 text-gray-600">Loading products...</p>
+              <p className="mt-4 text-gray-600">Loading products... (This might take a moment if the server is waking up)</p>
             </div>
           ) : products.length > 0 ? (
             <div>
