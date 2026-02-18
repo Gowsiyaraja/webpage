@@ -2,7 +2,7 @@
 
 A complete, production-ready full-stack e-commerce website built with **React.js**, **Express.js**, **MongoDB**, and **Tailwind CSS**.
 
-![Status](https://img.shields.io/badge/Status-Ready%20to%20Deploy-brightgreen)
+![Status](https://img.shields.io/badge/Status-Live-brightgreen)
 ![Node.js](https://img.shields.io/badge/Node.js-16%2B-green)
 ![React](https://img.shields.io/badge/React-18.2%2B-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-7.2%2B-green)
