@@ -58,18 +58,6 @@ async function seed() {
     const products = await Product.insertMany([
       // Face Care
       {
-        title: 'Bridal Facewash',
-        description: 'Premium face wash for bridal glow and radiance.',
-        price: 700,
-        discountPrice: 599,
-        stock: 45,
-        category: 'Face Care',
-        tags: ['facewash', 'bridal', 'glow'],
-        rating: 4.7,
-        reviewCount: 145,
-        isActive: true
-      },
-      {
         title: 'BOTOX FACE SERUM',
         description: 'Slow the signs of aging fade lines Tightens open pores, Prevents from fine lines, sagging skin, laugh lines. Natural alternative to Botox fillers which shows drastic results within 2 weeks. Suitable for all ages plumps & hydrates your skin. Adds a immense glow to your face. BOTOX Serum can also use right before your makeup to add a flawless finish and luminous glow.',
         price: 549,
@@ -117,18 +105,6 @@ async function seed() {
       },
 
       // Hair Care
-      {
-        title: 'Biotin Hair Growth Serum',
-        description: 'Hair growth serum enriched with biotin to boost hair health.',
-        price: 1700,
-        discountPrice: 1499,
-        stock: 25,
-        category: 'Hair Care',
-        tags: ['serum', 'biotin', 'growth'],
-        rating: 4.7,
-        reviewCount: 320,
-        isActive: true
-      },
       {
         title: 'Almond And Bhringraj Hair Oil',
         description: 'Nourish your hair naturally with the goodness of almond and bhringraj. This powerful blend helps reduce hair fall, strengthen roots, and promote healthy growth. Deeply conditions the scalp while adding shine and softness to dull, dry hair. Perfect for regular use to achieve stronger, thicker, and healthier-looking hair.',

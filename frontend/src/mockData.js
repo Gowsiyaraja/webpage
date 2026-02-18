@@ -1,17 +1,5 @@
 export const mockProducts = [
   {
-    _id: '1',
-    title: 'Bridal Facewash',
-    description: 'Premium face wash for bridal glow and radiance.',
-    price: 700,
-    discountPrice: 599,
-    stock: 45,
-    category: 'Face Care',
-    rating: 4.7,
-    reviewCount: 145,
-    images: ['https://images.unsplash.com/photo-1556228720-1957be83f304?q=80&w=1000&auto=format&fit=crop']
-  },
-  {
     _id: '2',
     title: 'BOTOX FACE SERUM',
     description: 'Slow the signs of aging fade lines Tightens open pores.',
@@ -43,18 +31,6 @@ export const mockProducts = [
     rating: 4.6,
     reviewCount: 120,
     images: ['/lip.png']
-  },
-  {
-    _id: '5',
-    title: 'Biotin Hair Growth Serum',
-    description: 'Hair growth serum enriched with biotin.',
-    price: 1700,
-    discountPrice: 1499,
-    stock: 25,
-    category: 'Hair Care',
-    rating: 4.7,
-    reviewCount: 320,
-    images: ['https://images.unsplash.com/photo-1629198727546-8888a978dbf7?q=80&w=1000&auto=format&fit=crop']
   },
   {
     _id: '6',
