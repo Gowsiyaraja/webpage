@@ -18,7 +18,12 @@ async function seed() {
   try {
     await mongoose.connect(MONGO_URI);
     console.log('✅ Connected to MongoDB');
+  } catch (err) {
+    console.error('❌ MongoDB connection error:', err.message);
+    process.exit(1);
+  }
 
+  try {
     // Clear existing data
     await User.deleteMany();
     await Product.deleteMany();

@@ -6,7 +6,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-gray-300">
+    <footer className="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white">
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
@@ -26,10 +26,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/products" className="hover:text-pink-500">Products</Link></li>
-              <li><Link to="/about-us" className="hover:text-pink-500">About Us</Link></li>
-              <li><Link to="/faq" className="hover:text-pink-500">FAQ</Link></li>
-              <li><Link to="/contact" className="hover:text-pink-500">Contact</Link></li>
+              <li><Link to="/products" className="hover:text-pink-500 font-medium">Products</Link></li>
+              <li><Link to="/about-us" className="hover:text-pink-500 font-medium">About Us</Link></li>
+              <li><Link to="/faq" className="hover:text-pink-500 font-medium">FAQ</Link></li>
+              <li><Link to="/contact" className="hover:text-pink-500 font-medium">Contact</Link></li>
             </ul>
           </div>
 
@@ -37,10 +37,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Legal</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/privacy-policy" className="hover:text-pink-500">Privacy Policy</Link></li>
-              <li><Link to="/terms-of-service" className="hover:text-pink-500">Terms of Service</Link></li>
-              <li><Link to="/shipping-policy" className="hover:text-pink-500">Shipping Policy</Link></li>
-              <li><Link to="/return-policy" className="hover:text-pink-500">Return Policy</Link></li>
+              <li><Link to="/privacy-policy" className="hover:text-pink-500 font-medium">Privacy Policy</Link></li>
+              <li><Link to="/terms-of-service" className="hover:text-pink-500 font-medium">Terms of Service</Link></li>
+              <li><Link to="/shipping-policy" className="hover:text-pink-500 font-medium">Shipping Policy</Link></li>
+              <li><Link to="/return-policy" className="hover:text-pink-500 font-medium">Return Policy</Link></li>
             </ul>
           </div>
 
@@ -50,15 +50,15 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start">
                 <Mail size={16} className="mr-3 mt-1 flex-shrink-0" />
-                <a href="mailto:gowsiyaraja@gmail.com" className="hover:text-pink-500">gowsiyaraja@gmail.com</a>
+                <a href="mailto:gowsiyaraja@gmail.com" className="hover:text-pink-500 font-medium">gowsiyaraja@gmail.com</a>
               </li>
               <li className="flex items-start">
                 <Phone size={16} className="mr-3 mt-1 flex-shrink-0" />
-                <a href="tel:9942254017" className="hover:text-pink-500">9942254017</a>
+                <a href="tel:9942254017" className="hover:text-pink-500 font-medium">9942254017</a>
               </li>
               <li className="flex items-start">
                 <MapPin size={16} className="mr-3 mt-1 flex-shrink-0" />
-                <span>Coimbatore, Tamil Nadu, India</span>
+                <span className="font-medium">Coimbatore, Tamil Nadu, India</span>
               </li>
             </ul>
           </div>
