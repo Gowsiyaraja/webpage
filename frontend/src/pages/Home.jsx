@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../api/api'
 import ProductCard from '../components/ProductCard'
+import ProductSkeleton from '../components/ProductSkeleton'
 import { Sparkles, Leaf, Shield } from 'lucide-react'
 import { mockProducts } from '../mockData'
 
@@ -20,8 +21,8 @@ export default function Home() {
     ])
       .then(res => setProducts(res.data.data || []))
       .catch(err => {
-        console.error("Backend failed or timed out, using mock data", err)
-        setProducts(mockProducts.slice(0, 8))
+        console.error("Failed to fetch featured products:", err);
+        setProducts([]); // Set to empty array on failure.
       })
       .finally(() => setLoading(false))
   }, [])
@@ -72,9 +73,10 @@ export default function Home() {
           <Link to="/products" className="text-primary hover:text-accent font-bold">View All →</Link>
         </div>
         {loading ? (
-          <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-            <p className="mt-4 text-gray-600">Loading amazing products... (Server might be waking up)</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {Array(4).fill(0).map((_, index) => (
+              <ProductSkeleton key={index} />
+            ))}
           </div>
         ) : products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

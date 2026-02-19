@@ -27,23 +27,8 @@ export default function Login() {
       }
     } catch (err) {
       console.error("Login API failed:", err);
-      // --- DEMO MODE FALLBACK ---
-      // If the backend is down, we can still demo the frontend login.
-      if (email === 'gowsiyaraja@gmail.com' && password === 'password123') {
-        console.log("Entering demo mode for admin.");
-        const fakeAdminUser = { _id: 'admin123', name: 'Admin', email: 'gowsiyaraja@gmail.com', role: 'admin' };
-        const fakeToken = 'fake-jwt-token-for-demo-mode';
-        login(fakeToken, fakeAdminUser);
-        navigate('/admin');
-      } else if (email === 'customer@blossom.test' && password === 'password123') {
-        console.log("Entering demo mode for customer.");
-        const fakeCustomerUser = { _id: 'customer123', name: 'Jane Doe', email: 'customer@blossom.test', role: 'customer' };
-        const fakeToken = 'fake-jwt-token-for-demo-mode';
-        login(fakeToken, fakeCustomerUser);
-        navigate('/dashboard');
-      } else {
-        setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
-      }
+      // Removed demo-mode fallback to show real errors from the backend.
+      setError(err.response?.data?.message || 'Login failed. Please check your credentials or server status.');
     } finally {
       setLoading(false)
     }

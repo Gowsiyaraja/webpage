@@ -24,22 +24,8 @@ export default function Register() {
       navigate('/dashboard')
     } catch (err) {
       console.error("Registration failed:", err);
-      
-      // --- DEMO MODE FALLBACK ---
-      // If backend is down/unreachable, simulate a successful registration
-      if (!err.response || err.code === "ERR_NETWORK" || err.response?.status >= 500) {
-        console.log("Backend unreachable or error. Entering demo mode.");
-        const fakeUser = { 
-          _id: 'demo_user_' + Date.now(), 
-          name: name, 
-          email: email, 
-          role: 'customer' 
-        };
-        login('fake-jwt-token-demo', fakeUser);
-        navigate('/dashboard');
-      } else {
-        setError(err.response?.data?.message || 'Registration failed. Please try again.');
-      }
+      // Removed demo-mode fallback to show real errors from the backend.
+      setError(err.response?.data?.message || 'Registration failed. Please try again or check server status.');
     } finally {
       setLoading(false)
     }

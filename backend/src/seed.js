@@ -436,6 +436,37 @@ async function seed() {
     });
     console.log('📋 Created sample order');
 
+    // Create more sample orders
+    const order2 = await Order.create({
+      user: customer._id,
+      items: [{ product: products[2]._id, qty: 2, price: products[2].price }],
+      subtotal: products[2].price * 2,
+      tax: Math.round(products[2].price * 2 * TAX_RATE),
+      shippingCost: SHIPPING_COST,
+      total: (products[2].price * 2) + Math.round(products[2].price * 2 * TAX_RATE) + SHIPPING_COST,
+      shippingAddress: customer.addresses[0],
+      status: 'shipped',
+      paymentStatus: 'completed',
+      paymentMethod: 'cod'
+    });
+
+    const order3 = await Order.create({
+      user: customer._id,
+      items: [
+        { product: products[3]._id, qty: 1, price: products[3].price },
+        { product: products[4]._id, qty: 1, price: products[4].price }
+      ],
+      subtotal: products[3].price + products[4].price,
+      tax: Math.round((products[3].price + products[4].price) * TAX_RATE),
+      shippingCost: SHIPPING_COST,
+      total: (products[3].price + products[4].price) + Math.round((products[3].price + products[4].price) * TAX_RATE) + SHIPPING_COST,
+      shippingAddress: customer.addresses[0],
+      status: 'pending',
+      paymentStatus: 'pending',
+      paymentMethod: 'cod'
+    });
+    console.log('📋 Created 2 more sample orders');
+
     console.log('\n✨ Seed complete! You can now login with:');
     console.log('  Admin: gowsiyaraja@gmail.com / password123');
     console.log('  Customer: customer@blossom.test / password123');

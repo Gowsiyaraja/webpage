@@ -31,6 +31,14 @@ export default function Cart() {
     }
   }, [user])
 
+  // --- Calculations for display ---
+  // These are for UI display only. The final, authoritative calculation
+  // must happen on the backend to ensure security and accuracy.
+  const subtotal = cart?.subtotal || 0;
+  const shippingCost = subtotal > 0 ? 50 : 0; // Fixed shipping cost
+  const tax = Math.round(subtotal * 0.18);
+  const total = subtotal + shippingCost + tax;
+
   const handleAddressChange = (e) => {
     setAddress({ ...address, [e.target.name]: e.target.value })
   }
@@ -49,34 +57,32 @@ export default function Cart() {
 
     setLoading(true)
     try {
-      const subtotal = cart.subtotal
-      const shippingCost = 50
-      const tax = Math.round(subtotal * 0.18)
-      const total = subtotal + shippingCost + tax
-
-      const orderData = {
+      // BEST PRACTICE: The frontend should only send information the backend cannot
+      // know on its own (like cart items and shipping address).
+      // All price calculations should be done on the backend to prevent tampering.
+      const orderPayload = {
         items: cart.items.map(item => ({
           product: item.product._id,
           qty: item.qty,
-          price: item.discountPrice || item.price
         })),
-        subtotal,
-        tax,
-        shippingCost,
-        total,
         shippingAddress: address,
-        paymentMethod: 'cod'
-      }
+        paymentMethod: 'cod', // This can be made dynamic if you add more payment options
+      };
 
-      const response = await api.post('/orders', orderData)
+      const response = await api.post('/orders', orderPayload)
       
       if (response.data) {
+        alert('Order placed successfully!');
         clearCart()
         navigate('/dashboard?tab=orders')
       }
     } catch (error) {
       console.error('Checkout error:', error)
-      alert(error.response?.data?.message || 'Failed to process checkout. Please try again.')
+      // The "demo mode" fallback was hiding real errors. Now, we show them so you can debug.
+      // This error likely means your backend API is not running or has an issue.
+      // Check your backend server logs for more details.
+      const errorMessage = error.response?.data?.message || 'Could not connect to the server. Please try again later.';
+      alert(`Order Failed: ${errorMessage}`);
     } finally {
       setLoading(false)
     }
@@ -226,22 +232,22 @@ export default function Cart() {
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
-                  <span className="font-semibold">₹{cart.subtotal}</span>
+                  <span className="font-semibold">₹{subtotal}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Shipping</span>
-                  <span className="font-semibold">₹50</span>
+                  <span className="font-semibold">₹{shippingCost}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Tax (18%)</span>
-                  <span className="font-semibold">₹{Math.round(cart.subtotal * 0.18)}</span>
+                  <span className="font-semibold">₹{tax}</span>
                 </div>
               </div>
               
               <div className="border-t pt-4 mb-4">
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span>₹{cart.subtotal + 50 + Math.round(cart.subtotal * 0.18)}</span>
+                  <span>₹{total}</span>
                 </div>
               </div>
               

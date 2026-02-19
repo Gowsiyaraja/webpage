@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/api';
 import { Search } from 'lucide-react';
+import { mockAdminOrders } from '../mockData';
 
 export default function AdminOrderList() {
   const [orders, setOrders] = useState([]);
@@ -14,7 +15,11 @@ export default function AdminOrderList() {
         const data = Array.isArray(res.data) ? res.data : (res.data.data || []);
         setOrders(data);
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error("Could not fetch admin orders, using mock data.", err);
+        // Fallback to mock data if API fails (e.g., in demo mode)
+        setOrders(mockAdminOrders);
+      })
       .finally(() => setLoading(false));
   }, []);
 

@@ -80,3 +80,33 @@ export const mockProducts = [
     images: ['/soap.png']
   }
 ];
+
+export const mockAdminOrders = [
+  {
+    _id: 'order1',
+    orderNumber: 'BLSM-1001',
+    user: { name: 'Jane Doe', email: 'customer@blossom.test' },
+    total: 2298,
+    status: 'delivered',
+    paymentStatus: 'completed',
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    _id: 'order2',
+    orderNumber: 'BLSM-1002',
+    user: { name: 'John Smith', email: 'john@example.com' },
+    total: 849,
+    status: 'shipped',
+    paymentStatus: 'completed',
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    _id: 'order3',
+    orderNumber: 'BLSM-1003',
+    user: { name: 'Emily White', email: 'emily@example.com' },
+    total: 1599,
+    status: 'pending',
+    paymentStatus: 'pending',
+    createdAt: new Date().toISOString(),
+  },
+];
