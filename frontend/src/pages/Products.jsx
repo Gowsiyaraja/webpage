@@ -28,7 +28,7 @@ export default function Products() {
     
     // Create a promise that rejects after 8 seconds
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Request timed out')), 8000)
+      setTimeout(() => reject(new Error('Request timed out')), 15000) // Increased timeout
     );
 
     // Race the API call against the timeout

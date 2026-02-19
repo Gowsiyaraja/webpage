@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Request timed out')), 5000)
+      setTimeout(() => reject(new Error('Request timed out')), 15000) // Increased timeout
     );
 
     Promise.race([

@@ -23,7 +23,7 @@ export default function Login() {
       if (res.data.user.role === 'admin') {
         navigate('/admin')
       } else {
-        navigate('/')
+        navigate('/dashboard')
       }
     } catch (err) {
       console.error("Login API failed:", err);
