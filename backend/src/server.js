@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 
 dotenv.config();
 
+const app = express();
+
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
@@ -12,15 +14,11 @@ const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/users');
 const cartRoutes = require('./routes/cart');
 
-// In your backend/index.js or backend/server.js
-
-const cors = require('cors');
-
 app.use(cors({
   origin: [
     'http://localhost:5173',                    // Local development
     'https://webpage-omega.vercel.app',         // Your first Vercel link
-    'https://24mit017gowsiyablossom.vercel.app' // <--- ADD THIS NEW LINK
+    'https://24mit017gowsiyablossom.vercel.app'
   ],
   credentials: true
 }));
