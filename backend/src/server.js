@@ -12,12 +12,19 @@ const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/users');
 const cartRoutes = require('./routes/cart');
 
-const app = express();
+// In your backend/index.js or backend/server.js
+
+const cors = require('cors');
 
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',                    // Local development
+    'https://webpage-omega.vercel.app',         // Your first Vercel link
+    'https://24mit017gowsiyablossom.vercel.app' // <--- ADD THIS NEW LINK
+  ],
   credentials: true
 }));
+
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
