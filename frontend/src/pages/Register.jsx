@@ -24,8 +24,16 @@ export default function Register() {
       navigate('/dashboard')
     } catch (err) {
       console.error("Registration failed:", err);
-      // Removed demo-mode fallback to show real errors from the backend.
-      setError(err.response?.data?.message || 'Registration failed. Please try again or check server status.');
+      // Improved error handling to show exactly why it failed
+      let msg = 'Registration failed.';
+      if (err.response) {
+        msg = err.response.data?.message || `Server Error: ${err.response.status} - ${err.response.statusText}`;
+      } else if (err.request) {
+        msg = 'Network Error: No response from server. Check internet or backend URL.';
+      } else {
+        msg = err.message;
+      }
+      setError(msg);
     } finally {
       setLoading(false)
     }

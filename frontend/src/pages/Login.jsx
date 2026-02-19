@@ -27,8 +27,16 @@ export default function Login() {
       }
     } catch (err) {
       console.error("Login API failed:", err);
-      // Removed demo-mode fallback to show real errors from the backend.
-      setError(err.response?.data?.message || 'Login failed. Please check your credentials or server status.');
+      // Improved error handling
+      let msg = 'Login failed.';
+      if (err.response) {
+        msg = err.response.data?.message || `Server Error: ${err.response.status} - ${err.response.statusText}`;
+      } else if (err.request) {
+        msg = 'Network Error: No response from server. Check internet or backend URL.';
+      } else {
+        msg = err.message;
+      }
+      setError(msg);
     } finally {
       setLoading(false)
     }
@@ -74,6 +82,11 @@ export default function Login() {
                 className="input pl-10"
                 required
               />
+            </div>
+            <div className="text-right">
+              <Link to="/contact" className="text-sm text-primary hover:underline">
+                Forgot Password?
+              </Link>
             </div>
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full flex items-center justify-center gap-2">
