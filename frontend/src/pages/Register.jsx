@@ -17,6 +17,7 @@ export default function Register() {
     e.preventDefault()
     setLoading(true)
     setError('')
+    console.log("Attempting registration request to:", api.defaults.baseURL);
 
     try {
       const res = await api.post('/auth/register', { name, email, password })

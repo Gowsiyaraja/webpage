@@ -16,6 +16,7 @@ export default function Login() {
     e.preventDefault()
     setLoading(true)
     setError('')
+    console.log("Attempting login request to:", api.defaults.baseURL);
 
     try {
       const res = await api.post('/auth/login', { email, password })
