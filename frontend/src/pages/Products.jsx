@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import api from '../api/api'
 import ProductCard from '../components/ProductCard'
 import ProductSkeleton from '../components/ProductSkeleton'
-import { Search, ChevronDown } from 'lucide-react'
+import { Search, ChevronDown, PackageX } from 'lucide-react'
 import { mockProducts } from '../mockData'
 
 export default function Products() {
@@ -56,7 +56,7 @@ export default function Products() {
       })
       .catch(err => {
         console.error("Failed to fetch products:", err);
-        setProducts([]); // Set to empty array on failure to show the 'No products found' message.
+        setProducts(mockProducts); // Fallback to mock data
       })
       .finally(() => setLoading(false))
   }, [search, category, priceRange, sortBy])
@@ -175,10 +175,12 @@ export default function Products() {
               </div>
             </div>
           ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-500 mb-4 text-lg">No products found</p>
-              <button onClick={() => { setSearch(''); setCategory(''); setPriceRange([0, 10000]); }} className="btn-primary">
-                Reset Filters
+            <div className="text-center py-16 card bg-gray-50">
+              <PackageX size={64} className="mx-auto text-gray-400 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-700 mb-2">No Products Found</h3>
+              <p className="text-gray-500 mb-6">Try adjusting your search or filter to find what you're looking for.</p>
+              <button onClick={() => { setSearch(''); setCategory(''); setPriceRange([0, 10000]); setSortBy('latest'); }} className="btn-primary">
+                Clear All Filters
               </button>
             </div>
           )}
