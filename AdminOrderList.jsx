@@ -1,69 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import api from '../../api/api';
+// server/routes/orders.js
+import express from 'express';
+import db from '../db.js';
 
-export default function AdminOrderList() {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+const router = express.Router();
 
-  useEffect(() => {
-    api.get('/admin/orders')
-      .then(res => setOrders(res.data.data || []))
-      .catch(err => console.error(err))
-      .finally(() => setLoading(false));
-  }, []);
+// Place a new order
+router.post('/', async (req, res) => {
+  const { customerName, products } = req.body;
+  db.data.orders.push({ id: Date.now(), customerName, products, status: 'Pending' });
+  await db.write();
+  res.json({ message: 'Order placed successfully' });
+});
 
-  if (loading) {
-    return <div className="text-center py-12"><div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div></div>;
+export default router; 
+// server/routes/admin.js
+import express from 'express';
+import db from '../db.js';
+
+const router = express.Router();
+
+// Admin login
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  await db.read();
+  if (username === db.data.admin.username && password === db.data.admin.password) {
+    res.json({ success: true });
+  } else {
+    res.json({ success: false });
   }
+});
 
-  return (
-    <div className="card">
-      <h2 className="text-2xl font-bold mb-6">All Orders</h2>
-      {orders.length > 0 ? (
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-4 py-3 text-left font-bold text-gray-700">Order #</th>
-                <th className="px-4 py-3 text-left font-bold text-gray-700">Customer</th>
-                <th className="px-4 py-3 text-left font-bold text-gray-700">Date</th>
-                <th className="px-4 py-3 text-left font-bold text-gray-700">Total</th>
-                <th className="px-4 py-3 text-left font-bold text-gray-700">Payment</th>
-                <th className="px-4 py-3 text-left font-bold text-gray-700">Status</th>
-                <th className="px-4 py-3 text-left font-bold text-gray-700">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map(order => (
-                <tr key={order._id} className="border-t hover:bg-gray-50 transition">
-                  <td className="px-4 py-3 font-mono text-sm">{order.orderNumber}</td>
-                  <td className="px-4 py-3">{order.user?.name || 'Guest'}</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">{new Date(order.createdAt).toLocaleDateString()}</td>
-                  <td className="px-4 py-3 font-bold text-primary">₹{order.total}</td>
-                  <td className="px-4 py-3">
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${order.paymentStatus === 'completed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                      {order.paymentStatus.toUpperCase()}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${order.status === 'delivered' ? 'bg-green-100 text-green-700' : order.status === 'shipped' ? 'bg-blue-100 text-blue-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                      {order.status.toUpperCase()}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <Link to={`/admin/orders/${order._id}`} className="btn-secondary btn-sm">
-                      View
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <p className="text-gray-600 text-center py-12">No orders found.</p>
-      )}
-    </div>
-  );
-}
+// Get all orders
+router.get('/orders', async (req, res) => {
+  await db.read();
+  res.json(db.data.orders);
+});
+
+export default router;
