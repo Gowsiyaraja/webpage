@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const mongoose = require('mongoose');
+const { db } = require('./config/firebase');
 
 dotenv.config();
 
@@ -40,21 +40,17 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
 
-if (!MONGO_URI) {
-  console.error('❌ MONGO_URI not set in .env');
-  process.exit(1);
-}
-
-mongoose.connect(MONGO_URI)
+// Test Firebase connection
+db.collection('test').doc('connection').set({ status: 'ok', timestamp: new Date() })
   .then(() => {
+    console.log('✅ Firebase connection successful');
     app.listen(PORT, () => {
       console.log(`✅ Blossom Backend running on http://localhost:${PORT}`);
     });
   })
   .catch(err => {
-    console.error('❌ MongoDB connection error:', err.message);
+    console.error('❌ Firebase connection error:', err.message);
     process.exit(1);
   });
 
